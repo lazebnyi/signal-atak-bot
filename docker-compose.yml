@@ -1,0 +1,68 @@
+services:
+  # ── taky (TAK server) ────────────────────────────────────
+  taky:
+    build:
+      context: ./taky
+    hostname: taky
+    ports:
+      - "8089:8089"    # CoT SSL
+    volumes:
+      - ./taky/config:/data
+    networks:
+      - botnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s=socket.socket(); s.connect(('127.0.0.1',8089)); s.close()"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  # ── signal-cli daemon ─────────────────────────────────────
+  signal-cli:
+    platform: linux/amd64
+    build:
+      context: ./signal-cli
+    hostname: signal-cli
+    volumes:
+      - ${SIGNAL_DATA_PATH:-~/.local/share/signal-cli}:/data/signal-cli
+    command: ["-c", "/data/signal-cli", "-u", "+48571324944", "daemon", "--tcp", "0.0.0.0:7583", "--receive-mode=on-start"]
+    networks:
+      - botnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "sh", "-c", "kill -0 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  # ── Bot (Python app) ──────────────────────────────────────
+  bot:
+    build:
+      context: ./bot
+    hostname: bot
+    depends_on:
+      taky:
+        condition: service_healthy
+      signal-cli:
+        condition: service_healthy
+    environment:
+      SIGNAL_NUMBER: "${SIGNAL_NUMBER}"
+      SIGNAL_CLI_HOST: "signal-cli"
+      SIGNAL_CLI_PORT: "${SIGNAL_CLI_PORT:-7583}"
+      TAK_HOST: "taky"
+      TAK_PORT: "8089"
+      COT_STALE_MINUTES: "${COT_STALE_MINUTES:-1}"
+      SSL_CERT: "/app/certs/bot-cert.pem"
+      SSL_KEY: "/app/certs/bot-key.pem"
+      SSL_CA: "/app/certs/ca.pem"
+    volumes:
+      - ./certs:/app/certs:ro
+    networks:
+      - botnet
+    restart: unless-stopped
+
+networks:
+  botnet:
+    driver: bridge
