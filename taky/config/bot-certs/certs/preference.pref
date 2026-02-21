@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='ASCII' standalone='yes'?>
+<preferences>
+  <preference version="1" name="cot_streams">
+    <entry key="count" class="class java.lang.Integer">1</entry>
+    <entry key="description0" class="class java.lang.String">MacBookPro.home</entry>
+    <entry key="enabled0" class="class java.lang.Boolean">false</entry>
+    <entry key="connectString0" class="class java.lang.String">192.168.1.32:8089:ssl</entry>
+  </preference>
+  <preference version="1" name="com.atakmap.app_preferences">
+    <entry key="displayServerConnectionWidget" class="class java.lang.Boolean">true</entry>
+    <entry key="caLocation" class="class java.lang.String">/storage/emulated/0/atak/cert/server-12c9c804-5e5a-4812-a8ce-8ed5e2f93476.p12</entry>
+    <entry key="caPassword" class="class java.lang.String">atakatak</entry>
+    <entry key="clientPassword" class="class java.lang.String">atakatak</entry>
+    <entry key="certificateLocation" class="class java.lang.String">/storage/emulated/0/atak/cert/bot-5c66eef7-7149-4bd7-9719-00798de81101.p12</entry>
+  </preference>
+</preferences>

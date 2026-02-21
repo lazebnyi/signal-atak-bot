@@ -1,0 +1,12 @@
+<MissionPackageManifest version="2">
+  <Configuration>
+    <Parameter name="uid" value="b72494ce-3fee-4801-935a-f5a1d9ed4341"/>
+    <Parameter name="name" value="MacBookPro.home_DP"/>
+    <Parameter name="onReceiveDelete" value="true"/>
+  </Configuration>
+  <Contents>
+    <Content ignore="false" zipEntry="certs/preference.pref"/>
+    <Content ignore="false" zipEntry="certs/server-12c9c804-5e5a-4812-a8ce-8ed5e2f93476.p12"/>
+    <Content ignore="false" zipEntry="certs/bot-5c66eef7-7149-4bd7-9719-00798de81101.p12"/>
+  </Contents>
+</MissionPackageManifest>
