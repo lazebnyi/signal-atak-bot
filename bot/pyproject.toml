@@ -1,0 +1,23 @@
+[project]
+name = "signal-atak-bot"
+version = "0.1.0"
+description = "Signal → CoT → ATAK bot"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0",
+    "ruff>=0.15",
+]
+setup = [
+    "taky==0.10",
+    "setuptools<81",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["unit_tests"]
+
+[tool.ruff]
+target-version = "py312"
